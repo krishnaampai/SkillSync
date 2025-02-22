@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Users | SkillSync</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, sans-serif;
+        }
+        body 
+        {
+            background: url('https://i.pinimg.com/736x/33/9c/76/339c762c2f72885d2e5ab7c6be772ec9.jpg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .header 
+        {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            position: absolute;
+            top: 0;
+        }
+        .logo
+        {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+        .logo img
+        {
+            width: 160px;
+            height: 40px;
+            border: none;
+        }
+        .logo:hover
+        {
+            transform: scale(1.1);
+        }
+        .logout-btn 
+        {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .logout-btn:hover 
+        {
+            background: #cc0000;
+        }
+        .search-container 
+        {
+            margin-top: 80px;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input, select
+        {
+            padding: 10px;
+            width: 60%;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .search-btn 
+        {
+            padding: 10px 20px;
+            background: #00c2ff;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .search-btn:hover 
+        {
+            background: #008fb3;
+        }
+        .profile-card 
+        {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            width: 50%;
+            min-height: 250px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.3);
+            text-align: left;
+            margin-top: 20px;
+            display: none;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .profile-card.show 
+        {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .profile-card h2 
+        {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .skills
+         {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .skill 
+        {
+            background: #007aa5;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        .buttons 
+        {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .nav-btn, .collab-btn 
+        {
+            background: #00c2ff;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .nav-btn:hover, .collab-btn:hover 
+        {
+            background: #008fb3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="SkillSync Logo">
+        </a>
+        <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
+    </div>
+
+    <div class="search-container">
+        <h2>Find Users</h2>
+        <input type="text" id="skill-input" placeholder="Enter skill (e.g., Java, Python)">
+        <select id="experience-filter">
+            <option value="any">Any Experience</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Expert">Expert</option>
+        </select>
+        <button class="search-btn" onclick="searchUsers()">Find Users</button>
+    </div>
+    <div class="profile-card" id="user-profile">
+        <h2 id="profile-name">Name</h2>
+        <p><strong>Experience:</strong> <span id="profile-exp">Loading...</span></p>
+        <p><strong>GitHub:</strong> <a id="profile-github" href="#" target="_blank" style="color: #00c2ff;">GitHub Link</a></p>
+        <p><strong>Skills:</strong></p>
+        <div class="skills" id="profile-skills"></div>
+        <div class="buttons">
+            <button class="nav-btn" onclick="prevUser()">⬅ Prev</button>
+            <button class="collab-btn" onclick="sendCollabRequest()">Send Collab Request</button>
+            <button class="nav-btn" onclick="nextUser()">Next ➡</button>
+        </div>
+    </div>
+   <script>
+        let users = []; 
+        let currentIndex = 0;
+
+        function searchUsers() {
+            let skill = document.getElementById("skill-input").value.toLowerCase();
+            let expLevel = document.getElementById("experience-filter").value;
+            if (!skill) return alert("Enter a skill!");
+
+            users = [
+                { name: "Alice", github: "https://github.com/alice", skills: ["Java", "Python"], experience: "Expert" },
+                { name: "Bob", github: "https://github.com/bob", skills: ["JavaScript", "React"], experience: "Intermediate" },
+                { name: "Charlie", github: "https://github.com/charlie", skills: ["Python", "Django"], experience: "Beginner" },
+            ];
+
+            users = users.filter(user =>
+                user.skills.some(s => s.toLowerCase() === skill) &&
+                (expLevel === "any" || user.experience === expLevel)
+            );
+
+            if (users.length === 0) {
+                alert("No users found!");
+                return;
+            }
+
+            currentIndex = 0;
+            displayUser();
+        }
+
+        function displayUser() {
+            if (users.length === 0) return;
+
+            let user = users[currentIndex];
+            document.getElementById("profile-name").textContent = user.name;
+            document.getElementById("profile-exp").textContent = user.experience;
+            document.getElementById("profile-github").href = user.github;
+            document.getElementById("profile-github").textContent = user.github;
+
+            let skillsContainer = document.getElementById("profile-skills");
+            skillsContainer.innerHTML = "";
+            user.skills.forEach(skill => {
+                let skillTag = document.createElement("span");
+                skillTag.className = "skill";
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+
+            let card = document.getElementById("user-profile");
+            card.style.display = "block";
+            setTimeout(() => card.classList.add("show"), 10);
+        }
+
+        function nextUser() {
+            currentIndex = (currentIndex + 1) % users.length;
+            displayUser();
+        }
+
+        function prevUser() {
+            currentIndex = (currentIndex - 1 + users.length) % users.length;
+            displayUser();
+        }
+
+        function sendCollabRequest() {
+            alert(`Collab request sent to ${users[currentIndex].name}!`);
+        }
+    </script>
+</body>
+</html>
