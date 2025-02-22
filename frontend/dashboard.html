@@ -7,6 +7,7 @@
     <script type = "module" src = "../backend/env.js"> </script>
     <script type="module" src="../backend/firebaseconfig.js"></script>
     <script type="module" src="../frontend/displayprofile.js"></script>
+    <script type = "module" src = "dashboard.js"></script>
 
     <style>
         * {
@@ -257,13 +258,17 @@
         
         
         <div class="requests-card">
-            <h2>Collaboration Requests</h2>
-            <div id="collab-requests-list">Loading...</div>  
+            <h2>Collaborate</h2>
+            <div id="collab-requests-list">
+                <button class="find-btn" onclick="findProjectsBySkills()"> 
+            Find Projects by Skills    
+            </div>  
             <button class="find-btn" onclick="window.location.href='search.html'">
                 <img src="https://cdn3.iconfinder.com/data/icons/fluent-solid-24px-vol-5/24/ic_fluent_people_community_add_24_filled-64.png" 
                 alt="Find Icon" class="button-icon"> 
                 Find Collaborators
             </button>
+            <div id="matching-projects-list"></div>
         </div>
     </div>
 </body>

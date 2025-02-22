@@ -67,7 +67,7 @@ function showProjectDetails(project) {
         <p><strong>Description:</strong> ${project.description}</p>
         <p><strong>Required Skills:</strong> ${project.skills.join(", ")}</p>
         <button class="request-collab-btn" onclick="requestCollaboration('${project.id}', '${project.ownerId}')">
-            Request Collaboration
+            View Collaboration requests
         </button>
     `;
 }
