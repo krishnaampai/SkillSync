@@ -1,9 +1,7 @@
-// Import the necessary Firebase libraries
 import { auth, db } from "../backend/env.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 export async function updateProfileDisplay() {
-    // Get the logged-in user's ID
     const userId = localStorage.getItem("LoggedInUserId");
     if (!userId) {
         console.log("User is not logged in.");
@@ -11,46 +9,67 @@ export async function updateProfileDisplay() {
     }
 
     try {
-        // Reference to the user's document in Firestore
         const userRef = doc(db, "users", userId);
         const userDoc = await getDoc(userRef);
 
         if (userDoc.exists()) {
-            // Get user data from Firestore
             const userData = userDoc.data();
-            const name = userData.name || "No name available";
-            const githubLink = userData.github || "#";  
-            const skills = userData.skills || [];
-            const projects = userData.projects || []; 
-            document.getElementById("name").textContent = name;
-            document.getElementById("githublink").href = githubLink;
-            document.getElementById("githublink").textContent = githubLink; 
+            document.getElementById("name").textContent = userData.name || "No name available";
+            document.getElementById("githublink").href = userData.github || "#";  
+            document.getElementById("githublink").textContent = userData.github || "GitHub Profile"; 
 
-            
             const skillsList = document.getElementById("skills-list");
-            skillsList.innerHTML = ""; 
-            skills.forEach(skill => {
+            skillsList.innerHTML = "";
+            (userData.skills || []).forEach(skill => {
                 const skillElement = document.createElement("div");
                 skillElement.classList.add("skill");
                 skillElement.textContent = skill;
                 skillsList.appendChild(skillElement);
             });
 
-            // Display projects
-            const projectsList = document.getElementById("projects-list");
-            projectsList.innerHTML = ""; 
-            projects.forEach(project => {
-                const projectElement = document.createElement("div");
-                projectElement.textContent = project;
-                projectsList.appendChild(projectElement);
-            });
+            displayProjects();
         } else {
-            console.log("No such document!");
+            console.log("No such user document!");
         }
     } catch (error) {
-        console.error("Error getting document:", error);
+        console.error("Error getting user document:", error);
     }
 }
 
+async function displayProjects() {
+    try {
+        const projectsList = document.getElementById("projects-list");
+        projectsList.innerHTML = "";
+
+        const projectsCollection = collection(db, "Project");
+        const projectsSnapshot = await getDocs(projectsCollection);
+
+        projectsSnapshot.forEach(doc => {
+            const projectData = doc.data();
+
+            const projectButton = document.createElement("button");
+            projectButton.textContent = projectData.name;
+            projectButton.classList.add("project-button");
+            projectButton.onclick = () => showProjectDetails(projectData);
+
+            projectsList.appendChild(projectButton);
+        });
+    } catch (error) {
+        console.error("Error fetching projects:", error);
+    }
+}
+
+function showProjectDetails(project) {
+    const projectDetailsDiv = document.getElementById("project-details");
+    
+    projectDetailsDiv.innerHTML = `
+        <h3>${project.name}</h3>
+        <p><strong>Description:</strong> ${project.description}</p>
+        <p><strong>Required Skills:</strong> ${project.skills.join(", ")}</p>
+        <button class="request-collab-btn" onclick="requestCollaboration('${project.id}', '${project.ownerId}')">
+            Request Collaboration
+        </button>
+    `;
+}
 
 updateProfileDisplay();
