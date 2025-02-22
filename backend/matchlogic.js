@@ -3,13 +3,13 @@ import { getFirestore, collection, getDocs, setDoc, doc, serverTimestamp } from 
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBSCJwX9e92JFyRWlOkMxCfyJfE15oSgJU",
-    authDomain: "skillsync-67adc.firebaseapp.com",
-    projectId: "skillsync-67adc",
-    storageBucket: "skillsync-67adc.firebasestorage.app",
-    messagingSenderId: "646697456816",
-    appId: "1:646697456816:web:c09c78851964844a085775",
-    measurementId: "G-H7TNCMZPJ0"
+    apiKey: window.env.FIREBASE_API_KEY,
+    authDomain: window.env.FIREBASE_AUTH_DOMAIN,
+    projectId: window.env.FIREBASE_PROJECT_ID,
+    storageBucket: window.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: window.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: window.env.FIREBASE_APP_ID,
+    measurementId: window.env.FIREBASE_MEASUREMENT_ID
   };
 
 const app = initializeApp(firebaseConfig);
