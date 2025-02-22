@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Project</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <script type = "module "src="/backend/env.js"></script>
+  
+  
+</head>
+<body>
+  <h1>Submit a New Project</h1>
+  <form id="project-form">
+    
+    <label for="project-name">Project Name:</label>
+    <input type="text" id="project-name" name="project-name" required>
+
+    <label for="project-description">Project Description:</label>
+    <textarea id="project-description" name="project-description" rows="4" required></textarea>
+
+   
+    <label for="project-skills">Skills (comma separated):</label>
+    <input type="text" id="project-skills" name="project-skills" placeholder="e.g., React, Node.js, AWS" required>
+
+   
+    <label for="active">Active:</label>
+    <input type="checkbox" id="active" name="active">
+
+    <button type="button" id="submit-project">Submit Project</button>
+  </form>
+  <script type = "module" src="projectDetailsForm.js" defer></script>
+</body>
+</html>
