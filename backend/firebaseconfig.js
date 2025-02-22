@@ -2,21 +2,21 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebas
 //import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
 import {getAuth,createUserWithEmailAndPasssword,signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 import{getFirestore, setDoc,doc} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+const script = document.createElement("script");
+script.src = "/backend/env.js"; // Adjust the path if necessary
+document.head.appendChild(script);
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBSCJwX9e92JFyRWlOkMxCfyJfE15oSgJU",
-  authDomain: "skillsync-67adc.firebaseapp.com",
-  projectId: "skillsync-67adc",
-  storageBucket: "skillsync-67adc.firebasestorage.app",
-  messagingSenderId: "646697456816",
-  appId: "1:646697456816:web:c09c78851964844a085775",
-  measurementId: "G-H7TNCMZPJ0"
-};
-
+script.onload = () => {
+  const firebaseConfig = {
+    apiKey: window.env.FIREBASE_API_KEY,
+    authDomain: window.env.FIREBASE_AUTH_DOMAIN,
+    projectId: window.env.FIREBASE_PROJECT_ID,
+    storageBucket: window.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: window.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: window.env.FIREBASE_APP_ID,
+    measurementId: window.env.FIREBASE_MEASUREMENT_ID
+  };
+}
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
