@@ -14,8 +14,9 @@
         }
         body 
         {
-            background: url('background.png') no-repeat center center/cover;
-            height: 100vh;
+            background: url('background.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -166,6 +167,69 @@
         {
             background: #008fb3;
         }
+        .chat-container {
+            display: none;
+            width: 50%;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
+        }
+        .chat-box {
+            height: 250px;
+            overflow-y: auto;
+            border-radius: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.3);
+        }
+        .message {
+            max-width: 70%;
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-radius: 15px;
+            clear: both;
+        }
+        .message.sent {
+            float: right;
+            background: #007aa5;
+            color: white;
+            margin-right: 5px;
+        }
+        .message.received {
+            float: left;
+            background: #333;
+            color: white;
+            margin-left: 5px;
+        }
+        #message-input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .chat-container button {
+            padding: 10px 20px;
+            background: #00c2ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .chat-container button:hover {
+            background: #008fb3;
+        }
+        .chat-box::after {
+            content: "";
+            display: table;
+            clear: both;
+         }
+        
     </style>
 </head>
 <body>
@@ -199,6 +263,11 @@
             <button class="nav-btn" onclick="nextUser()">Next ➡</button>
         </div>
     </div>
-   
+    <div class="chat-container" id="chat-container">
+        <h2>Chat with <span id="chat-user-name"></span></h2>
+        <div id="chat-box" class="chat-box"></div>
+        <input type="text" id="message-input" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
 </body>
 </html>
