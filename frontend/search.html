@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Users</title>
+    <script type="module" src="../backend/matchlogic.js"></script>
     <style>
         * {
             margin: 0;
@@ -198,71 +199,6 @@
             <button class="nav-btn" onclick="nextUser()">Next ➡</button>
         </div>
     </div>
-   <script>
-        let users = []; 
-        let currentIndex = 0;
-
-        function searchUsers() {
-            let skill = document.getElementById("skill-input").value.toLowerCase();
-            let expLevel = document.getElementById("experience-filter").value;
-            if (!skill) return alert("Enter a skill!");
-
-            users = [
-                { name: "Alice", github: "https://github.com/alice", skills: ["Java", "Python"], experience: "Expert" },
-                { name: "Bob", github: "https://github.com/bob", skills: ["JavaScript", "React"], experience: "Intermediate" },
-                { name: "Charlie", github: "https://github.com/charlie", skills: ["Python", "Django"], experience: "Beginner" },
-            ];
-
-            users = users.filter(user =>
-                user.skills.some(s => s.toLowerCase() === skill) &&
-                (expLevel === "any" || user.experience === expLevel)
-            );
-
-            if (users.length === 0) {
-                alert("No users found!");
-                return;
-            }
-
-            currentIndex = 0;
-            displayUser();
-        }
-
-        function displayUser() {
-            if (users.length === 0) return;
-
-            let user = users[currentIndex];
-            document.getElementById("profile-name").textContent = user.name;
-            document.getElementById("profile-exp").textContent = user.experience;
-            document.getElementById("profile-github").href = user.github;
-            document.getElementById("profile-github").textContent = user.github;
-
-            let skillsContainer = document.getElementById("profile-skills");
-            skillsContainer.innerHTML = "";
-            user.skills.forEach(skill => {
-                let skillTag = document.createElement("span");
-                skillTag.className = "skill";
-                skillTag.textContent = skill;
-                skillsContainer.appendChild(skillTag);
-            });
-
-            let card = document.getElementById("user-profile");
-            card.style.display = "block";
-            setTimeout(() => card.classList.add("show"), 10);
-        }
-
-        function nextUser() {
-            currentIndex = (currentIndex + 1) % users.length;
-            displayUser();
-        }
-
-        function prevUser() {
-            currentIndex = (currentIndex - 1 + users.length) % users.length;
-            displayUser();
-        }
-
-        function sendCollabRequest() {
-            alert(`Collab request sent to ${users[currentIndex].name}!`);
-        }
-    </script>
+   
 </body>
 </html>
