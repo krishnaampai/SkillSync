@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile </title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        body
+        {
+            background:url('https://i.pinimg.com/736x/33/9c/76/339c762c2f72885d2e5ab7c6be772ec9.jpg') no-repeat center center/cover; 
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+        .profile-container
+        {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            /*max-width: 500px;*/
+            max-height: 90vh;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.3);
+            overflow-y: auto;
+        }
+        .profile-container label,
+        .profile-container input,
+        .profile-container select,
+        .profile-container textarea,
+        .skills-container 
+        {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 5px;
+           /* width: 100%;*/
+        }
+        h2
+        {
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        label
+        {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #00ffcc;
+        }
+        input,select,textarea
+        {
+            width: 100%;
+            padding: 8px;
+            margin-top: 3px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            outline: none;
+        }
+        textarea
+        {
+            resize: none;
+            height: 80px;
+        }
+        option
+        {
+            background: black;
+            color: white;
+        }
+        .skill-group 
+        {
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            backdrop-filter: blur(10px);
+            text-align: left;
+        }
+        fieldset
+        {
+            width: 45%;
+            padding: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            backdrop-filter: blur(10px);
+        }
+        legend 
+        {
+            font-weight: bold;
+            color: #00ffcc;
+            text-transform: uppercase;
+        }
+        .logo
+        {
+            position: fixed;
+            top: 8px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        .logo img
+        {
+            width: 150px;
+            height: 30px;
+            margin-right: 1px;
+            border: none;
+        }
+        .logo:hover
+        {
+            transform: scale(1.1);
+        }
+        .skill-group label 
+        {
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            cursor: pointer;
+            gap: 3px;
+            white-space: nowrap;
+            /*flex-direction: row;
+            justify-content: flex-start;
+            margin: 0;
+            padding: 0;*/
+        }
+        .skill-group input[type="checkbox"]
+         {
+            width: 10px;
+            height: 10px;
+            accent-color: #00ffcc;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .skill-group input[type="checkbox"]:hover 
+        {
+            transform: scale(1.3);
+        }
+        button 
+        {
+            background: #007aa5;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        button:hover
+         {
+            background: #005f80;
+            box-shadow: 0 0 10px #00c2ff;
+        }
+        @media (max-width: 768px) 
+        {
+            .profile-container 
+            {
+                width: 90%;
+            }
+            .skills-container
+            {
+                flex-direction: column;
+            }
+
+            .skill-group 
+            {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="logo">
+        <img src="logo.png" alt="SkillSync Logo">
+    </a>
+    <div class="profile-container ">
+        <h2>Edit Profile</h2>
+        <label for="name">Name: </label>
+        <input type="text" id="name" placeholder="Enter your name">
+        <label for="bio">Short Bio: </label>
+        <textarea id="bio" placeholder="Tell us about yourself..."></textarea>
+        <label for="experience">Experience level: </label>
+        <select id="experience">
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Expert">Expert</option>
+        </select>
+        <label for="skills">Select Your Skills:</label>
+        <div class="skills-container">
+            <fieldset>
+                <legend>Frontend</legend>
+                <label><input type="checkbox" value="React"> React</label>
+                <label><input type="checkbox" value="Vue"> Vue</label>
+                <label><input type="checkbox" value="Angular"> Angular</label>
+                <label><input type="checkbox" value="HTML"> HTML</label>
+                <label><input type="checkbox" value="CSS"> CSS</label>
+                <label><input type="checkbox" value="JavaScript"> JavaScript</label>
+                <label>
+                    <input type="checkbox" class="other-skill-checkbox" data-target="other-skill-frontend"> Other
+                </label>
+                <input type="text" id="other-skill-frontend" placeholder="Enter other skill" style="display: none;">
+            </fieldset>
+            
+            <fieldset>
+                <legend>Backend</legend>
+                <label><input type="checkbox" value="Node.js"> Node.js</label>
+                <label><input type="checkbox" value="Django"> Django</label>
+                <label><input type="checkbox" value="Flask"> Flask</label>
+                <label><input type="checkbox" value="Spring Boot"> Spring Boot</label>
+                <label><input type="checkbox" value="Express.js"> Express.js</label>
+                <label><input type="checkbox" value="Ruby on Rails"> Ruby on Rails</label> 
+                <label>
+                    <input type="checkbox" class="other-skill-checkbox" data-target="other-skill-backend"> Other
+                </label>
+                <input type="text" id="other-skill-backend" placeholder="Enter other skill" style="display: none;">
+            </fieldset>
+            
+            <fieldset>
+                <legend>DevOps</legend>
+                <label><input type="checkbox" value="Docker"> Docker</label>
+                <label><input type="checkbox" value="Kubernetes"> Kubernetes</label>
+                <label><input type="checkbox" value="AWS"> AWS</label>
+                <label><input type="checkbox" value="CI/CD"> CI/CD</label>
+                <label>
+                    <input type="checkbox" class="other-skill-checkbox" data-target="other-skill-devops"> Other
+                </label>
+                <input type="text" id="other-skill-devops" placeholder="Enter other skill" style="display: none;">
+            </fieldset>
+            
+            <fieldset>
+                <legend>Other</legend>
+                <label><input type="checkbox" value="UI/UX"> UI/UX</label>
+                <label><input type="checkbox" value="AI/ML"> AI/ML</label>
+                <label><input type="checkbox" value="Cybersecurity"> Cybersecurity</label>
+                <label><input type="checkbox" value="Blockchain"> Blockchain</label>
+                <label>
+                    <input type="checkbox" class="other-skill-checkbox" data-target="other-skill-other"> Other
+                </label>
+                <input type="text" id="other-skill-other" placeholder="Enter other skill" style="display: none;">
+            </fieldset>            
+        </div>
+        <label for="github">GitHub ID:</label>
+        <input type="text" id="github" placeholder="Enter GitHub Username">
+        <button onclick="saveProfile()">Save Profile</button>
+    </div>
+    <script>
+        function saveProfile() 
+        {
+            
+        }
+        document.querySelectorAll(".other-skill-checkbox").forEach(function(checkbox) {
+        checkbox.addEventListener("change", function()
+         {
+            let targetInput = document.getElementById(this.getAttribute("data-target"));
+            targetInput.style.display = this.checked ? "block" : "none";
+        });
+    });
+
+    </script>
+</body>
