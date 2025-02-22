@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-//import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
-import {getAuth,createUserWithEmailAndPasssword,signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-import{getFirestore, setDoc,doc} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
 const script = document.createElement("script");
 script.src = "/backend/env.js"; // Adjust the path if necessary
 document.head.appendChild(script);
@@ -16,78 +16,84 @@ script.onload = () => {
     appId: window.env.FIREBASE_APP_ID,
     measurementId: window.env.FIREBASE_MEASUREMENT_ID
   };
-}
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
-function showMessage(message,divID){
-  var messsageDiv = document.getElementById(divID);
-  messsageDiv.style.display = "block";
-  messsageDiv.innerHTML = message;
-  setTimeout(function(){
-    messsageDiv.style.opacity = 0;
-  },5000);
-}
-const signUp = document.getElementById('submitSignUp');//id for sign up button - submitSignUp
-signUp.addEventListener('click', (event) =>{
-  event.preventDefault();
-  const email = document.getElementById('email-js').value;
-  const password = document.getElementById('password-js').value;
-  const name  = document.getElementById('name-js').value;
 
-  const auth = getAuth();
-  const db = getFirestore();
-  createUserWithEmailAndPasssword(auth,email,password)
-  .then((userCredential)=>{
-    const user = userCredential.user;
-    const userData = {
-      email: email,
-      name : name,
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-    };
-
-    showMessage('Account created Successfully' ,'signUpMessage');//signUpMessage - id
-    const docRef = doc(db, "users" , user.uid);
+  function showMessage(message, divID) {
+    var messageDiv = document.getElementById(divID);
+    if (!messageDiv) return; 
     
-  })
-  .catch((error)=>{
-    const errorCode = error.code;
-    if (errorCode =='auth/email-already-in-use'){
-      showMessage('Email already exists!', 'signUpMessage');
-    }
-    else {
-      showMessage('Unable to create user :/', 'signUpMessage');
-    }
-  })
-});
-
-const signIn = document.getElementById('submitSignIn');//id for sign in button - submitSignIn
-signIn.addEventListener('click', (event) =>{
-  event.preventDefault();
-  const email = document.getElementById('email-js').value;
-  const password = document.getElementById('password-js').value;
-  const auth = getAuth();
+    messageDiv.style.display = "block";
+    messageDiv.style.opacity = "1"; 
+    messageDiv.innerHTML = message;
   
-  signInWithEmailAndPassword(auth,email,password)
-  .then((userCredential)=>{
-  
-    showMessage('Login Successfull' ,'signInMessage');//signInMessage - id
-    const user = userCredential.user;
-    localStorage.setItem('LoggedInUserId',user.uid);
-    windows.location.href = 'frontend/dashboard.html';
-  })
+    setTimeout(function () {
+      messageDiv.style.opacity = "0";
+    }, 5000);
+  }
 
-  .catch((error)=>{
-    const errorCode = error.code;
-    if (errorCode =='auth/invalid-credential'){
-      showMessage('Incorrect email or Password', 'signInMessage');
+  const signUp = document.getElementById('submitSignUp'); //id for sign up button - submitSignUp
+  signUp.addEventListener('click', (event) => {
+    event.preventDefault();
+    const email = document.getElementById('email-js').value;
+    const password = document.getElementById('password-js').value;
+    const name = document.getElementById('name-js').value;
+
+    if (password.length < 6) {
+      showMessage('Password must be at least 6 characters!', 'signUpMessage');
+      return;
     }
-    else {
-      showMessage('Account does not exist', 'signInMessage');
-    }
-  })
-});
 
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        const userData = {
+          email: email,
+          name: name,
+        };
 
+        const docRef = doc(db, "users", user.uid);
+        setDoc(docRef, userData) // Add user data to Firestore
+          .then(() => {
+            showMessage('Account created Successfully', 'signUpMessage');
+          })
+          .catch(() => {
+            showMessage('Error storing user data!', 'signUpMessage');
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        if (errorCode == 'auth/email-already-in-use') {
+          showMessage('Email already exists!', 'signUpMessage');
+        } else {
+          showMessage('Unable to create user :/', 'signUpMessage');
+        }
+      });
+  });
 
-//div message for signup and signin
+  const signIn = document.getElementById('submitSignIn'); //id for sign in button - submitSignIn
+  signIn.addEventListener('click', (event) => {
+    event.preventDefault();
+    const email = document.getElementById('semail-js').value;
+    const password = document.getElementById('spassword-js').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log("User logged in:", userCredential.user);
+        showMessage('Login Successful', 'signInMessage'); //signInMessage - id
+        localStorage.setItem('LoggedInUserId', userCredential.user.uid);
+        window.location.href = 'frontend/dashboard.html';
+      },1000)
+      .catch((error) => {
+        const errorCode = error.code;
+        if (errorCode == 'auth/invalid-credential') {
+          console.log("Error signing in:", error.message);
+          showMessage('Incorrect email or Password', 'signInMessage');
+        } else {
+          showMessage('Account does not exist', 'signInMessage');
+        }
+      });
+  });
+};
