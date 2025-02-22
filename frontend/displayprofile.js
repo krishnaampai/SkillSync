@@ -1,5 +1,5 @@
-import { auth, db } from './env.js'; // Import auth and db from env.js
-import { setDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { auth, db } from "../backend/env.js"; 
+export { auth, db };
 
 export async function updateUserProfile(userId, bio, skills, experienceLevel, availability) {
     console.log("Updating profile for user:", userId);
