@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup or Login</title>
-    <script type = "module" src = "/backend/env.js"></script>
+    <script type="module" src="/backend/env.js"></script>
     <script type="module" src="../backend/firebaseconfig.js"></script>
     <style>
         * {
@@ -53,17 +53,50 @@
             padding: 30px;
             text-align: center;
             background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .form-box button
+        {
+            width: 100%;
+            margin: 10px 0;
         }
         .form-box h2 {
             margin-bottom: 20px;
         }
-        input {
-            width: 90%;
+        .input-group 
+        {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 8px;
+            margin-bottom: 10px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .input-group img {
+            width: 30px;
+            height: 25px;
+            margin-right: 10px;
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.7));
+            transition: transform 0.3s ease, filter 0.3s ease-in-out;
+        }
+        .input-group:hover img {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 1));
+        }
+        .input-group input {
+            width: 100%;
             padding: 10px;
-            margin: 10px 0;
             border: none;
             border-radius: 5px;
             font-size: 1rem;
+            background: transparent;
+            color: white;
+            outline: none;
+        }
+        ::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
         button {
             background: #000036;
@@ -95,6 +128,35 @@
             margin-top: 10px;
             border-radius: 5px;
         }
+        #Google-signin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#Google-signin:hover {
+    background: #000007;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
     </style>
 </head>
 <body>
@@ -104,20 +166,35 @@
     <div class="container">
         <div class="form-box">
             <h2>Sign Up</h2>
-            <input type="text" id="name-js" placeholder="Enter Name" required>
-            <input type="email" id="email-js" placeholder="Enter Email" required>
-            <input type="password" id="password-js" placeholder="Enter Password" required>
+            <div class="input-group">
+                <img src="https://cdn4.iconfinder.com/data/icons/e-commerce-icon-set/48/Username-64.png" alt="User Icon">
+                <input type="text" id="name-js" placeholder="Enter Name" required>
+            </div>
+            <div class="input-group">
+                <img src="https://cdn0.iconfinder.com/data/icons/essentials-4/1691/packet-64.png" alt="Email Icon">
+                <input type="email" id="email-js" placeholder="Enter Email" required>
+            </div>
+            <div class="input-group">
+                <img src="https://cdn0.iconfinder.com/data/icons/essentials-4/1710/lock-64.png" alt="Password Icon">
+                <input type="password" id="password-js" placeholder="Enter Password" required>
+            </div>
             <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
             <button id="submitSignUp">Sign Up</button>
-           
         </div>
         <div class="form-box">
             <h2>Login</h2>
-            <input type="email" id="semail-js" placeholder="Enter Email" required>
-            <input type="password" id="spassword-js" placeholder="Enter Password" required>
+            <div class="input-group">
+                <img src="https://cdn0.iconfinder.com/data/icons/essentials-4/1691/packet-64.png" alt="Email Icon">
+                <input type="email" id="semail-js" placeholder="Enter Email" required>
+            </div>
+            <div class="input-group">
+                <img src="https://cdn0.iconfinder.com/data/icons/essentials-4/1710/lock-64.png" alt="Password Icon">
+                <input type="password" id="spassword-js" placeholder="Enter Password" required>
+            </div>
             <div id="signInMessage" class="messageDiv" style="display:none;"></div>
             <button id="submitSignIn">Login</button>
-            <button id = "Google-signin">Sign in using Google</button>
+            <button id="Google-signin"><img src="https://cdn1.iconfinder.com/data/icons/logos-brands-in-colors/544/Google__G__Logo-64.png" 
+                alt="Google Logo" class="google-icon">Sign in using Google</button>
         </div>
     </div>
 </body>
