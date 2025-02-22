@@ -19,18 +19,16 @@ export async function updateProfileDisplay() {
             // Get user data from Firestore
             const userData = userDoc.data();
             const name = userData.name || "No name available";
-            const githubLink = userData.github || "#";  // Assuming GitHub link is stored under 'github'
+            const githubLink = userData.github || "#";  
             const skills = userData.skills || [];
-            const projects = userData.projects || []; // Assuming projects are stored under 'projects'
-
-            // Update the profile section in the HTML
+            const projects = userData.projects || []; 
             document.getElementById("name").textContent = name;
             document.getElementById("githublink").href = githubLink;
-            document.getElementById("githublink").textContent = githubLink; // Display GitHub link text
+            document.getElementById("githublink").textContent = githubLink; 
 
-            // Display skills
+            
             const skillsList = document.getElementById("skills-list");
-            skillsList.innerHTML = ""; // Clear existing skills
+            skillsList.innerHTML = ""; 
             skills.forEach(skill => {
                 const skillElement = document.createElement("div");
                 skillElement.classList.add("skill");
@@ -40,7 +38,7 @@ export async function updateProfileDisplay() {
 
             // Display projects
             const projectsList = document.getElementById("projects-list");
-            projectsList.innerHTML = ""; // Clear existing projects
+            projectsList.innerHTML = ""; 
             projects.forEach(project => {
                 const projectElement = document.createElement("div");
                 projectElement.textContent = project;
@@ -54,5 +52,5 @@ export async function updateProfileDisplay() {
     }
 }
 
-// Call the updateProfileDisplay function when the page loads
+
 updateProfileDisplay();
