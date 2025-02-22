@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 const script = document.createElement("script");
@@ -19,6 +19,8 @@ script.onload = () => {
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  auth.languageCode = 'en';
+  const provider = new GoogleAuthProvider();
   const db = getFirestore(app);
 
   function showMessage(message, divID) {
@@ -33,6 +35,25 @@ script.onload = () => {
       messageDiv.style.opacity = "0";
     }, 5000);
   }
+
+  const googleLogin = document.getElementById('Google-signin');
+  googleLogin.addEventListener("click", function(){
+    const auth = getAuth();
+signInWithPopup(auth, provider)
+  .then((result) => {
+    
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    const user = result.user;
+    window.location.href = 'frontend/dashboard.html';
+  }).catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+   
+    
+  });
+
+  })
 
   const signUp = document.getElementById('submitSignUp'); //id for sign up button - submitSignUp
   signUp.addEventListener('click', (event) => {
