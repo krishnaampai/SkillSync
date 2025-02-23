@@ -47,12 +47,17 @@ async function displayProjects() {
         projectsSnapshot.forEach(doc => {
             const projectData = doc.data();
 
-            const projectButton = document.createElement("button");
-            projectButton.textContent = projectData.name;
-            projectButton.classList.add("project-button");
-            projectButton.onclick = () => showProjectDetails(projectData);
+            const projectCard = document.createElement("div");
+            projectCard.classList.add("project-card");
+            projectCard.innerHTML = `
+    <h3>${projectData.name}</h3>
+    <p>${projectData.description.slice(0, 50)}...</p>
+    <button class="view-details-btn">View Details</button>
+`;
+projectCard.querySelector(".view-details-btn").onclick = () => showProjectDetails(projectData);
 
-            projectsList.appendChild(projectButton);
+projectsList.appendChild(projectCard);
+
         });
     } catch (error) {
         console.error("Error fetching projects:", error);
