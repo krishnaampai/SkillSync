@@ -21,6 +21,22 @@ let currentIndex = 0;
 let currentUserId = null;
 let currentChatId = null;
 let unsubscribeMessages = null;
+let wasChatOpen = false;
+
+// Keyboard controls
+document.addEventListener('keydown', (e) => {
+  // Send message on Enter
+  if (e.key === 'Enter' && document.activeElement.id === 'message-input') {
+    e.preventDefault();
+    sendMessage();
+  }
+  
+  // Navigate with arrow keys when not typing
+  if (!document.activeElement.matches('input, textarea')) {
+    if (e.key === 'ArrowLeft') prevUser();
+    if (e.key === 'ArrowRight') nextUser();
+  }
+});
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -61,6 +77,9 @@ async function searchUsers() {
 function displayUser() {
   if (!users.length) return;
 
+  // Preserve chat state
+  wasChatOpen = document.getElementById("chat-container").style.display === "block";
+  
   const user = users[currentIndex];
   document.getElementById("profile-name").textContent = user.name;
   document.getElementById("profile-exp").textContent = user.experienceLevel;
@@ -80,8 +99,15 @@ function displayUser() {
   const profileCard = document.getElementById("user-profile");
   profileCard.style.display = "block";
   setTimeout(() => profileCard.classList.add("show"), 10);
-  document.getElementById("chat-container").style.display = "block";
-  openChat(user.id);
+  document.getElementById("chat-container").style.display = wasChatOpen ? "block" : "none";
+}
+
+function showChat() {
+  const chatContainer = document.getElementById("chat-container");
+  chatContainer.style.display = chatContainer.style.display === "none" ? "block" : "none";
+  if (chatContainer.style.display === "block") {
+    openChat(users[currentIndex].id);
+  }
 }
 
 async function openChat(matchedUserId) {
@@ -157,3 +183,4 @@ window.nextUser = () => { currentIndex = (currentIndex + 1) % users.length; disp
 window.prevUser = () => { currentIndex = (currentIndex - 1 + users.length) % users.length; displayUser(); };
 window.sendCollabRequest = () => alert(`Collab request sent to ${users[currentIndex].name}!`);
 window.sendMessage = sendMessage;
+window.showChat = showChat;
