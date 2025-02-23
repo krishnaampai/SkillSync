@@ -129,12 +129,52 @@
             font-size: 0.9rem;
         }
         #project-details {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             padding: 15px;
             border-radius: 10px;
             margin-top: 15px;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
+        }
+        #projects-list 
+        {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+            padding: 10px;
+        }
+        .project-button {
+    background: rgba(255, 255, 255, 0.15) !important; 
+    color: white !important;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* ✅ Subtle border for visibility */
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    backdrop-filter: blur(10px); /* ✅ Slight blur for better readability */
+}
+
+.project-button:hover {
+    background: rgba(255, 255, 255, 0.25)!important;
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(255, 255, 255, 0.3);
+}
+        .profile-card .glow-btn {
+            background: #00c2ff;
+            color: white;
+            transition: 0.3s;
         }
 
+        .profile-card .glow-btn:hover {
+            background: #008fb3;
+            box-shadow: 0px 0px 15px white;
+        }
         /* Buttons */
         .profile-card button, .find-btn {
             display: flex;
@@ -161,6 +201,8 @@
         .find-btn {
             background: #00c2ff;
             color: white;
+            position: relative;
+            top: -10px;
         }
         .find-btn:hover {
             background: #008fb3;
@@ -186,6 +228,36 @@
             justify-content: space-between;
             height: 100%;
         }
+        /* Style for the input field in the request section */
+.requests-card input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.15); /* Semi-transparent */
+    color: white;
+    outline: none;
+    margin-top: 20px;
+    margin-bottom: 2px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.2);
+}
+
+/* Placeholder text */
+.requests-card input[type="text"]::placeholder {
+    color: rgba(236, 234, 234, 0.8); /* Soft white */
+    opacity: 1; /* Fully visible */
+    font-weight: bold;
+}
+
+/* Glow effect on focus */
+.requests-card input[type="text"]:focus {
+    background: rgba(255, 255, 255, 0.25); /* Lighter background */
+    box-shadow: 0px 0px 10px rgba(0, 194, 255, 0.8);
+    transform: scale(1.02);
+}
+
         .requests-card h3 {
             text-align: center;
             margin-bottom: 10px;
@@ -196,6 +268,11 @@
             border-radius: 8px;
             margin: 5px 0;
         }
+        .profile-card, .requests-card {
+    max-height: 80vh;  
+    overflow-y: auto;  
+}
+        
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -237,10 +314,10 @@
                 <h2>Project Details</h2>
                 <p>Select a project to view details.</p>
             </div>
-            <button onclick="window.location.href='editprofile.html'">
+            <button class="glow-btn" onclick="window.location.href='editprofile.html'">
                 <img src="https://cdn0.iconfinder.com/data/icons/font-awesome-solid-vol-4/640/user-edit-64.png" class="button-icon"> Edit Profile
             </button>
-            <button onclick="window.location.href='projectDetailsForm.html'">
+            <button class="glow-btn" onclick="window.location.href='projectDetailsForm.html'">
                 <img src="https://cdn2.iconfinder.com/data/icons/arrows-and-universal-actions-icon-set/256/plus_circle-64.png" class="button-icon"> Add Project
             </button>
         </div>
@@ -249,7 +326,8 @@
         <div class="requests-card">
             <h2>Collaborate</h2>
             <input type="text" id="skillsInput" placeholder="Enter skills (comma-separated)">
-            <button class="find-btn" onclick="findProjectsByInputSkills()">Find Projects by Skills</button>
+            <button class="find-btn" onclick="findProjectsByInputSkills()">
+                <img src="https://cdn0.iconfinder.com/data/icons/digital-marketing-179/32/search-64.png" class="button-icon"> Find Projects by Skills</button>
             <div id="matching-projects-list"></div>
             <button class="find-btn" onclick="window.location.href='search.html'">
                 <img src="https://cdn3.iconfinder.com/data/icons/fluent-solid-24px-vol-5/24/ic_fluent_people_community_add_24_filled-64.png" class="button-icon"> Find Collaborators
