@@ -47,16 +47,12 @@ async function displayProjects() {
         projectsSnapshot.forEach(doc => {
             const projectData = doc.data();
 
-            const projectCard = document.createElement("div");
-            projectCard.classList.add("project-card");
-            projectCard.innerHTML = `
-    <h3>${projectData.name}</h3>
-    <p>${projectData.description.slice(0, 50)}...</p>
-    <button class="view-details-btn">View Details</button>
-`;
-projectCard.querySelector(".view-details-btn").onclick = () => showProjectDetails(projectData);
+            const projectButton = document.createElement("button");
+            projectButton.textContent = projectData.name;
+            projectButton.classList.add("project-button");
+            projectButton.onclick = () => showProjectDetails(projectData);
 
-projectsList.appendChild(projectCard);
+            projectsList.appendChild(projectButton);
 
         });
     } catch (error) {
@@ -71,13 +67,10 @@ function showProjectDetails(project) {
         <h3>${project.name}</h3>
         <p><strong>Description:</strong> ${project.description}</p>
         <p><strong>Required Skills:</strong> ${project.skills.join(", ")}</p>
-        <button class="request-collab-btn" onclick="viewCollaborationRequests('${project.id}')">
-            View Collaboration Requests
+        <button class="request-collab-btn" onclick="requestCollaboration('${project.id}', '${project.ownerId}')">
+            View Collaboration requests
         </button>
-        <div id="collab-requests-list"></div> 
     `;
 }
-
-
 
 updateProfileDisplay();
