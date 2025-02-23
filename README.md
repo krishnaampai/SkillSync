@@ -42,3 +42,8 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 - Firebase for providing easy-to-use backend services like authentication and Firestore.
 - The open-source community for their continuous contributions.
+
+## Demo video link
+https://drive.google.com/file/d/1UqZcTqAT7fyqL-mpkv6cRy--ym0KF2dw/view?usp=drive_link
+
+##
