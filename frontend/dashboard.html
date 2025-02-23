@@ -8,6 +8,7 @@
     <script type="module" src="../backend/firebaseconfig.js"></script>
     <script type="module" src="../frontend/displayprofile.js"></script>
     <script type = "module" src = "dashboard.js"></script>
+    <script type = "module" src = '../backend/collaboration.js'></script>
 
     <style>
         * {
@@ -260,8 +261,11 @@
         <div class="requests-card">
             <h2>Collaborate</h2>
             <div id="collab-requests-list">
-                <button class="find-btn" onclick="findProjectsBySkills()"> 
-            Find Projects by Skills    
+                <input type="text" id="skillsInput" placeholder="Enter skills (comma-separated)">
+                <button class="find-btn" onclick="findProjectsByInputSkills()"> 
+            Find Projects by Skills </button>
+            <h4>Matching Projects - </h4>
+            <div id = "matching-projects-list"></div>   
             </div>  
             <button class="find-btn" onclick="window.location.href='search.html'">
                 <img src="https://cdn3.iconfinder.com/data/icons/fluent-solid-24px-vol-5/24/ic_fluent_people_community_add_24_filled-64.png" 
