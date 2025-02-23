@@ -22,6 +22,7 @@
         }
         body {
             background: url('background.png') no-repeat center center/cover;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,8 +31,6 @@
             position: relative;
             overflow-y: auto;
             min-height: 100vh;
-            /*background-size: cover;
-            background-attachment: fixed;*/
         }
 
         /* Header */
@@ -102,8 +101,6 @@
 
         /* Profile & Collaboration Sections */
         .profile-card, .requests-card {
-            max-height: 80vh;  /* ✅ Prevents them from overflowing */
-    overflow-y: auto;
             flex: 1;
             background: rgba(0, 0, 0, 0.6);
             padding: 30px;
@@ -137,51 +134,7 @@
             border-radius: 10px;
             margin-top: 15px;
         }
-        #projects-list
-        {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  /* Responsive grid */
-            gap: 15px;
-            margin-top: 10px;
-            width: 100%;
-        }
-        .project-card
-        {
-            background: rgba(255, 255, 255, 0.12);
-            padding: 15px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            text-align: center;
-            color: white;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            min-height: 120px;  /* Ensures consistency */
-            max-width: 220px;   /* Sets a proper width */
-            margin: auto;
-        }
-        .project-card:hover
-        {
-            transform: translateY(-5px);
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
-        }
-        .project-title {
-    font-weight: bold;
-    font-size: 1rem;
-    color: #00c2ff;
-    margin-bottom: 5px;
-}
 
-        .project-description
-        {
-            font-size: 0.85rem;
-            opacity: 0.8;
-            text-align: center;
-        }
         /* Buttons */
         .profile-card button, .find-btn {
             display: flex;
@@ -280,14 +233,9 @@
             <div class="skills" id="skills-list"></div>
             <p><strong>Projects:</strong></p>
             <div id="projects-list"></div>
-<<<<<<< HEAD
             <div id="project-details">
-=======
-            <div id="project-details" class="profile-card">
                 <h2>Project Details</h2>
                 <p>Select a project to view details.</p>
-                <div id="collab-requests-list"></div> 
->>>>>>> c6467f240fd9e39d355c2e34263f7c9cb79a07d5
             </div>
             <button onclick="window.location.href='editprofile.html'">
                 <img src="https://cdn0.iconfinder.com/data/icons/font-awesome-solid-vol-4/640/user-edit-64.png" class="button-icon"> Edit Profile
