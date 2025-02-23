@@ -142,7 +142,7 @@ window.viewProjectDetails = async function (projectId) {
             <p><strong>Description:</strong> ${project.description || "No description available."}</p>
             <p><strong>Required Skills:</strong> ${project.skills?.join(", ") || "Not specified"}</p>
             <p><strong>Contact:</strong> ${project.contact || "Not available"}</p>
-            ${collabRequestsHTML}
+            <p><strong>Active:</strong> ${project.active ? "Yes" : "No"}</p>
             ${teamMembersHTML}
             <button id="collabRequestBtn">Request to Collaborate</button>
         `;

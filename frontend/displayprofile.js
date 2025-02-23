@@ -59,9 +59,51 @@ async function displayProjects() {
     }
 }
 
+async function viewCollaborationRequests(projectId) {
+    const collabRequestsDiv = document.getElementById("collab-requests-list");
+    collabRequestsDiv.innerHTML = "Loading requests...";
+
+    try {
+        const projectRef = doc(db, "Project", projectId);
+        const projectSnap = await getDoc(projectRef);
+
+        if (!projectSnap.exists()) {
+            collabRequestsDiv.innerHTML = "<p>Project not found.</p>";
+            return;
+        }
+
+        const project = projectSnap.data();
+        let collabRequestsHTML = "<p><strong>Collaboration Requests:</strong></p>";
+
+        if (project.collabRequests && project.collabRequests.length > 0) {
+            for (const request of project.collabRequests) {
+                const senderRef = doc(db, "users", request.senderId);
+                const senderSnap = await getDoc(senderRef);
+
+                let senderName = "Unknown User"; 
+                if (senderSnap.exists()) {
+                    senderName = senderSnap.data().name;  // Fetching name from users collection
+                }
+
+                collabRequestsHTML += `
+                    <p>${senderName} - Status: ${request.status}</p>
+                `;
+            }
+        } else {
+            collabRequestsHTML += "<p>No collaboration requests yet.</p>";
+        }
+
+        collabRequestsDiv.innerHTML = collabRequestsHTML;
+
+    } catch (error) {
+        console.error("Error fetching collaboration requests:", error);
+        collabRequestsDiv.innerHTML = "<p>Error loading requests.</p>";
+    }
+}
+
 function showProjectDetails(project) {
     const projectDetailsDiv = document.getElementById("project-details");
-    
+
     projectDetailsDiv.innerHTML = `
         <h3>${project.name}</h3>
         <p><strong>Description:</strong> ${project.description}</p>
@@ -72,6 +114,7 @@ function showProjectDetails(project) {
         <div id="collab-requests-list"></div> 
     `;
 }
+
 
 
 
