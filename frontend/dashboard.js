@@ -1,12 +1,9 @@
 import { db } from '../backend/env.js';
-import { doc, updateDoc,collection, getDocs ,getDoc,arrayUnion} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { doc, updateDoc, collection, getDocs, getDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 import { sendCollaborationRequest } from "../backend/collaboration.js";
 
 // Function to find projects by input skills
-window.findProjectsByInputSkills = async function() {
-    console.log("Find Projects button clicked!");
-
-   
+window.findProjectsByInputSkills = async function () {
     const inputSkills = document.getElementById("skillsInput").value
         .split(",")
         .map(skill => skill.trim().toLowerCase());
@@ -16,10 +13,8 @@ window.findProjectsByInputSkills = async function() {
         return;
     }
 
-    console.log("Searching for projects that match:", inputSkills);
-
     try {
-        const projectsRef = collection(db, "Project"); 
+        const projectsRef = collection(db, "Project");
         const projectsSnapshot = await getDocs(projectsRef);
 
         let matchingProjects = [];
@@ -28,7 +23,6 @@ window.findProjectsByInputSkills = async function() {
             let projectData = doc.data();
             let requiredSkills = (projectData.skills || []).map(skill => skill.toLowerCase());
 
-            
             if (inputSkills.some(skill => requiredSkills.includes(skill))) {
                 matchingProjects.push({ id: doc.id, ...projectData });
             }
@@ -43,7 +37,7 @@ window.findProjectsByInputSkills = async function() {
 // Function to display matching projects
 function displayMatchingProjects(matchingProjects) {
     const projectListContainer = document.getElementById("matching-projects-list");
-    projectListContainer.innerHTML = ""; 
+    projectListContainer.innerHTML = "";
     if (matchingProjects.length === 0) {
         projectListContainer.innerHTML = "<p>No matching projects found.</p>";
         return;
@@ -61,11 +55,7 @@ function displayMatchingProjects(matchingProjects) {
     });
 }
 
-
-
 window.viewProjectDetails = async function (projectId) {
-    console.log("Fetching project details for ID:", projectId);
-
     const projectDetailsContainer = document.getElementById("project-details");
     projectDetailsContainer.innerHTML = "Loading...";
 
@@ -97,30 +87,27 @@ window.viewProjectDetails = async function (projectId) {
         }
 
         projectDetailsContainer.innerHTML = `
-        <h2>${project.name}</h2>
-        <p><strong>Description:</strong> ${project.description || "No description available."}</p>
-        <p><strong>Required Skills:</strong> ${project.skills?.join(", ") || "Not specified"}</p>
-        <p><strong>Contact:</strong> ${project.contact || "Not available"}</p>
-        ${collabRequestsHTML}
-        ${teamMembersHTML}
-        <button id="collabRequestBtn">Request to Collaborate</button>
-    `;
-    
-    document.getElementById("collabRequestBtn").addEventListener("click", function() {
-        sendCollaborationRequest(projectId);
-    });
-    
+            <h2>${project.name}</h2>
+            <p><strong>Description:</strong> ${project.description || "No description available."}</p>
+            <p><strong>Required Skills:</strong> ${project.skills?.join(", ") || "Not specified"}</p>
+            <p><strong>Contact:</strong> ${project.contact || "Not available"}</p>
+            ${collabRequestsHTML}
+            ${teamMembersHTML}
+            <button id="collabRequestBtn">Request to Collaborate</button>
+        `;
+
+        document.getElementById("collabRequestBtn").addEventListener("click", function () {
+            const senderId = "currentUserId"; // Replace with actual sender ID (logged-in user)
+            const receiverId = project.ownerId; // Replace with actual receiver ID (project owner)
+            if (!senderId || !projectId || !receiverId) {
+                alert("Missing required fields. Please ensure you are logged in and the project is valid.");
+                return;
+            }
+            sendCollaborationRequest(senderId, projectId, receiverId);
+        });
+
     } catch (error) {
         console.error("Error fetching project details:", error);
         projectDetailsContainer.innerHTML = "<p>Error loading project details.</p>";
     }
 };
-
-
-
-
-
-
-
-
-

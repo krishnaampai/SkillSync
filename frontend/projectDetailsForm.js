@@ -19,7 +19,8 @@ document.getElementById('submit-project').addEventListener('click', async (e) =>
       skills: projectSkills,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
-      active: active
+      active: active,
+      ownerId : auth.currentUser.uid
     });
     console.log("Project added successfully!");
   } catch (error) {

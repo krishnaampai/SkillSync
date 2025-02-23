@@ -21,7 +21,7 @@ export async function sendCollaborationRequest(senderId, projectId, receiverId) 
           createdAt: new Date()
       });
 
-      console.log("Collaboration request sent successfully!");
+      alert("Collaboration request sent successfully!");
   } catch (error) {
       console.error("Error sending request:", error);
   }
