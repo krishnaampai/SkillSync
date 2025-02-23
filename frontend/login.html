@@ -13,13 +13,15 @@
             box-sizing: border-box;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
-        body {
+        body 
+        {
             display: flex;
             height: 100vh;
             justify-content: center;
             align-items: center;
             background: url('background.png') no-repeat center center/cover;
             color: white;
+            position: relative;
         }
         .logo 
         {
@@ -33,7 +35,7 @@
             font-size: 1.5rem;
             font-weight: bold;
             transition: transform 0.3s ease, filter 0.3s ease;
-            z-index: 1001; 
+            z-index: 1001;
         }
         .logo img 
         {
@@ -46,27 +48,28 @@
             transform: scale(1.2);
             filter: drop-shadow(0 0 15px rgba(189, 184, 184, 0.664));
         }
-        .container {
+        .container 
+        {
             display: flex;
             width: 80%;
-            max-width: 800px;
+            max-width: 900px;
+            justify-content: space-between;
+            gap: 30px; 
             border-radius: 10px;
             overflow: hidden;
         }
-        .form-box {
+        .form-box 
+        {
             flex: 1;
             padding: 30px;
             text-align: center;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.2); 
         }
-        .form-box button
+        .form-box h2 
         {
-            width: 100%;
-            margin: 10px 0;
-        }
-        .form-box h2 {
             margin-bottom: 20px;
         }
         .input-group 
@@ -74,25 +77,37 @@
             display: flex;
             align-items: center;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            padding: 8px;
-            margin-bottom: 10px;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 0 5px rgba(0, 194, 255, 0.8);
+            border: 0.001px solid rgba(227, 234, 236, 0.8);
             transition: box-shadow 0.3s ease-in-out;
         }
-        .input-group img {
+        .input-group input:focus 
+        {
+            box-shadow: 0 0 10px rgba(0, 194, 255, 0.8); 
+            border: 1px solid rgba(0, 194, 255, 0.8);
+            transform: scale(1.02);
+        }
+        .input-group img 
+        {
             width: 30px;
             height: 25px;
             margin-right: 10px;
             filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.7));
             transition: transform 0.3s ease, filter 0.3s ease-in-out;
         }
-        .input-group:hover img {
+        .input-group:hover img 
+        {
             transform: scale(1.1);
             filter: drop-shadow(0 0 10px rgba(0, 255, 255, 1));
         }
-        .input-group input {
+
+        .input-group input 
+        {
             width: 100%;
-            padding: 10px;
+            padding-top: 1px; 
             border: none;
             border-radius: 5px;
             font-size: 1rem;
@@ -100,67 +115,75 @@
             color: white;
             outline: none;
         }
-        ::placeholder {
+        ::placeholder 
+        {
             color: rgba(255, 255, 255, 0.7);
         }
-        button {
-            background: #000036;
+        .input-group:hover 
+        {
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+        button 
+        {
+            background: #007aa5;
             color: white;
             border: none;
-            padding: 10px;
-            width: 90%;
+            padding: 12px;
+            width: 100%;
             font-size: 1rem;
             border-radius: 5px;
             cursor: pointer;
             transition: 0.3s;
-            margin: 5px;
+            margin: 10px 0;
         }
-        button:hover {
-            background: #007aa5;
+        button:hover 
+        {
+            background: #005f82;
+            box-shadow: 0 0 12px rgba(235, 241, 243, 0.7);
         }
-        @media (max-width: 768px) {
-            .container {
+        #Google-signin 
+        {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: black;
+            font-weight: bold;
+            padding: 10px;
+            width: 100%;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        #Google-signin:hover 
+        {
+            background: #000007;
+            color: white;
+            box-shadow: 0 0 20px rgba(194, 185, 185, 0.3);
+        }
+
+        .google-icon 
+        {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        @media (max-width: 768px) 
+        {
+            .container 
+            {
                 flex-direction: column;
+                width: 90%;
+                gap: 20px; /* ✅ Increases spacing */
+            }
+            .form-box 
+            {
+                width: 100%;
+                padding: 25px;
             }
         }
-        .messageDiv {
-            background-color: #000036;
-            color: white;
-            border: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            padding: 5px;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-        #Google-signin {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    color: black;
-    font-weight: bold;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-#Google-signin:hover {
-    background: #000007;
-    color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.google-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-}
 
     </style>
 </head>
@@ -183,7 +206,6 @@
                 <img src="https://cdn0.iconfinder.com/data/icons/essentials-4/1710/lock-64.png" alt="Password Icon">
                 <input type="password" id="password-js" placeholder="Enter Password" required>
             </div>
-            <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
             <button id="submitSignUp">Sign Up</button>
         </div>
         <div class="form-box">
@@ -196,10 +218,11 @@
                 <img src="https://cdn0.iconfinder.com/data/icons/essentials-4/1710/lock-64.png" alt="Password Icon">
                 <input type="password" id="spassword-js" placeholder="Enter Password" required>
             </div>
-            <div id="signInMessage" class="messageDiv" style="display:none;"></div>
             <button id="submitSignIn">Login</button>
-            <button id="Google-signin"><img src="https://cdn1.iconfinder.com/data/icons/logos-brands-in-colors/544/Google__G__Logo-64.png" 
-                alt="Google Logo" class="google-icon">Sign in using Google</button>
+            <button id="Google-signin">
+                <img src="https://cdn1.iconfinder.com/data/icons/logos-brands-in-colors/544/Google__G__Logo-64.png" class="google-icon">
+                Sign in using Google
+            </button>
         </div>
     </div>
 </body>
