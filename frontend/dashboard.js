@@ -6,7 +6,7 @@ import { sendCollaborationRequest } from "../backend/collaboration.js";
 window.findProjectsByInputSkills = async function() {
     console.log("Find Projects button clicked!");
 
-    // Get user-entered skills
+   
     const inputSkills = document.getElementById("skillsInput").value
         .split(",")
         .map(skill => skill.trim().toLowerCase());
@@ -19,7 +19,7 @@ window.findProjectsByInputSkills = async function() {
     console.log("Searching for projects that match:", inputSkills);
 
     try {
-        const projectsRef = collection(db, "Project"); // Correct Firestore collection name
+        const projectsRef = collection(db, "Project"); 
         const projectsSnapshot = await getDocs(projectsRef);
 
         let matchingProjects = [];
@@ -28,7 +28,7 @@ window.findProjectsByInputSkills = async function() {
             let projectData = doc.data();
             let requiredSkills = (projectData.skills || []).map(skill => skill.toLowerCase());
 
-            // Check if at least one skill matches
+            
             if (inputSkills.some(skill => requiredSkills.includes(skill))) {
                 matchingProjects.push({ id: doc.id, ...projectData });
             }
@@ -43,8 +43,7 @@ window.findProjectsByInputSkills = async function() {
 // Function to display matching projects
 function displayMatchingProjects(matchingProjects) {
     const projectListContainer = document.getElementById("matching-projects-list");
-    projectListContainer.innerHTML = ""; // Clear previous results
-
+    projectListContainer.innerHTML = ""; 
     if (matchingProjects.length === 0) {
         projectListContainer.innerHTML = "<p>No matching projects found.</p>";
         return;
