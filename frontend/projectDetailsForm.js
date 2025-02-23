@@ -20,7 +20,8 @@ document.getElementById('submit-project').addEventListener('click', async (e) =>
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       active: active,
-      ownerId : auth.currentUser.uid
+      ownerId : auth.currentUser.uid,
+      collabRequests: [],
     });
     console.log("Project added successfully!");
   } catch (error) {

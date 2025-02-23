@@ -66,10 +66,13 @@ function showProjectDetails(project) {
         <h3>${project.name}</h3>
         <p><strong>Description:</strong> ${project.description}</p>
         <p><strong>Required Skills:</strong> ${project.skills.join(", ")}</p>
-        <button class="request-collab-btn" onclick="requestCollaboration('${project.id}', '${project.ownerId}')">
-            View Collaboration requests
+        <button class="request-collab-btn" onclick="viewCollaborationRequests('${project.id}')">
+            View Collaboration Requests
         </button>
+        <div id="collab-requests-list"></div> 
     `;
 }
+
+
 
 updateProfileDisplay();
