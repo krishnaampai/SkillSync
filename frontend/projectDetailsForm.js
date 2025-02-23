@@ -23,7 +23,7 @@ document.getElementById('submit-project').addEventListener('click', async (e) =>
       ownerId : auth.currentUser.uid,
       collabRequests: [],
     });
-    console.log("Project added successfully!");
+    alert("Project added successfully!");
   } catch (error) {
     console.error("Error adding project:", error);
   }
