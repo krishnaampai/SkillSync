@@ -46,9 +46,15 @@ onAuthStateChanged(auth, (user) => {
 });
 
 async function searchUsers() {
-  const skill = document.getElementById("skill-input").value.toLowerCase();
+  const skillInput = document.getElementById("skill-input").value;
   const expLevel = document.getElementById("experience-filter").value;
-  if (!skill) return alert("Enter a skill!");
+  
+  // Process comma-separated skills
+  const inputSkills = skillInput.split(',')
+    .map(s => s.trim().toLowerCase())
+    .filter(s => s !== '');
+
+  if (inputSkills.length === 0) return alert("Enter at least one skill!");
 
   try {
     const usersRef = collection(db, "users");
@@ -57,7 +63,7 @@ async function searchUsers() {
       .map(doc => ({ id: doc.id, ...doc.data() }))
       .filter(user => 
         user.id !== currentUserId && 
-        user.skills?.some(s => s.toLowerCase() === skill) &&
+        user.skills?.some(s => inputSkills.includes(s.toLowerCase())) &&
         (expLevel === "any" || user.experienceLevel === expLevel)
       );
 
