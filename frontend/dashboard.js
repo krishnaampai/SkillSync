@@ -1,6 +1,57 @@
 import { db } from '../backend/env.js';
-import { doc, updateDoc, collection, getDocs, getDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
-import { sendCollaborationRequest } from "../backend/collaboration.js";
+import { doc, updateDoc, collection, getDocs, getDoc, arrayUnion, query, where } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { sendCollaborationRequest, getCollaborationRequests, acceptCollaborationRequest, rejectCollaborationRequest } from "../backend/collaboration.js";
+
+window.acceptCollaborationRequest = acceptCollaborationRequest;
+window.rejectCollaborationRequest = rejectCollaborationRequest;
+
+
+window.viewCollaborationRequests = async function (projectId) {
+    
+    const collabRequestsContainer = document.getElementById("collab-requests-list");
+    if (!collabRequestsContainer) {
+        console.error("Error: collab-requests-list not found!");
+        return;
+    }
+
+    collabRequestsContainer.innerHTML = "Loading...";
+
+    try {
+        const userId = localStorage.getItem("LoggedInUserId");
+        if (!userId) {
+            alert("You must be logged in to view collaboration requests.");
+            return;
+        }
+
+        const requests = await getCollaborationRequests(userId);
+        const filteredRequests = requests.filter(request => request.projectId === projectId);
+
+        if (filteredRequests.length === 0) {
+            collabRequestsContainer.innerHTML = "<p>No collaboration requests found for this project.</p>";
+            return;
+        }
+        
+        let requestsHTML = "<h3>Collaboration Requests</h3>";
+        filteredRequests.forEach(request => {
+            requestsHTML += `
+                <div class="request-item">
+                    <p><strong>Sender ID:</strong> ${request.senderId}</p>
+                    <p><strong>Project ID:</strong> ${request.projectId}</p>
+                    <p><strong>Status:</strong> ${request.status}</p>
+                    <button onclick="acceptCollaborationRequest('${request.id}', '${request.projectId}', '${request.senderId}')">Accept</button>
+                    <button onclick="rejectCollaborationRequest('${request.id}')">Reject</button>
+                </div>
+            `;
+        });
+
+        collabRequestsContainer.innerHTML = requestsHTML;
+    } catch (error) {
+        console.error("Error fetching collaboration requests:", error);
+        collabRequestsContainer.innerHTML = "<p>Error loading collaboration requests.</p>";
+    }
+};
+
+
 
 // Function to find projects by input skills
 window.findProjectsByInputSkills = async function () {
@@ -97,12 +148,14 @@ window.viewProjectDetails = async function (projectId) {
         `;
 
         document.getElementById("collabRequestBtn").addEventListener("click", function () {
-            const senderId = "currentUserId"; // Replace with actual sender ID (logged-in user)
-            const receiverId = project.ownerId; // Replace with actual receiver ID (project owner)
+            const senderId = localStorage.getItem("LoggedInUserId");
+            const receiverId = project.ownerId; 
+            const projectId = projectSnap.id;
             if (!senderId || !projectId || !receiverId) {
                 alert("Missing required fields. Please ensure you are logged in and the project is valid.");
                 return;
             }
+
             sendCollaborationRequest(senderId, projectId, receiverId);
         });
 

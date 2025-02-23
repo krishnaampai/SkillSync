@@ -3,6 +3,7 @@ import { collection, addDoc, getDocs, updateDoc, doc, query, where, arrayUnion }
 
 // Function to send a collaboration request
 export async function sendCollaborationRequest(senderId, projectId, receiverId) {
+ 
   console.log("Sending request with:", { senderId, projectId, receiverId }); // Debugging log
 
   if (!senderId || !projectId || !receiverId) {
@@ -20,6 +21,11 @@ export async function sendCollaborationRequest(senderId, projectId, receiverId) 
           status: "pending",
           createdAt: new Date()
       });
+
+      const projectRef = doc(db, "Project", projectId);
+        await updateDoc(projectRef, {
+            collabRequests: arrayUnion({ senderId, status: "pending", createdAt: new Date() })
+        });
 
       alert("Collaboration request sent successfully!");
   } catch (error) {
