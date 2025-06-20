@@ -4,188 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup or Login</title>
-    <script type="module" src="/backend/env.js"></script>
-    <script type="module" src="../backend/firebaseconfig.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        body 
-        {
-            display: flex;
-            height: 100vh;
-            justify-content: center;
-            align-items: center;
-            background: url('background.png') no-repeat center center/cover;
-            color: white;
-            position: relative;
-        }
-        .logo 
-        {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            transition: transform 0.3s ease, filter 0.3s ease;
-            z-index: 1001;
-        }
-        .logo img 
-        {
-            width: 160px;
-            height: auto;
-            transition: transform 0.3s ease, filter 0.3s ease;
-        }
-        .logo:hover img 
-        {
-            transform: scale(1.2);
-            filter: drop-shadow(0 0 15px rgba(189, 184, 184, 0.664));
-        }
-        .container 
-        {
-            display: flex;
-            width: 80%;
-            max-width: 900px;
-            justify-content: space-between;
-            gap: 30px; 
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .form-box 
-        {
-            flex: 1;
-            padding: 30px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.2); 
-        }
-        .form-box h2 
-        {
-            margin-bottom: 20px;
-        }
-        .input-group 
-        {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 12px;
-            box-shadow: 0 0 5px rgba(0, 194, 255, 0.8);
-            border: 0.001px solid rgba(227, 234, 236, 0.8);
-            transition: box-shadow 0.3s ease-in-out;
-        }
-        .input-group input:focus 
-        {
-            box-shadow: 0 0 10px rgba(0, 194, 255, 0.8); 
-            border: 1px solid rgba(0, 194, 255, 0.8);
-            transform: scale(1.02);
-        }
-        .input-group img 
-        {
-            width: 30px;
-            height: 25px;
-            margin-right: 10px;
-            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.7));
-            transition: transform 0.3s ease, filter 0.3s ease-in-out;
-        }
-        .input-group:hover img 
-        {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 1));
-        }
-
-        .input-group input 
-        {
-            width: 100%;
-            padding-top: 1px; 
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            background: transparent;
-            color: white;
-            outline: none;
-        }
-        ::placeholder 
-        {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        .input-group:hover 
-        {
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-        }
-        button 
-        {
-            background: #007aa5;
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            font-size: 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin: 10px 0;
-        }
-        button:hover 
-        {
-            background: #005f82;
-            box-shadow: 0 0 12px rgba(235, 241, 243, 0.7);
-        }
-        #Google-signin 
-        {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            color: black;
-            font-weight: bold;
-            padding: 10px;
-            width: 100%;
-            font-size: 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s ease-in-out;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        #Google-signin:hover 
-        {
-            background: #000007;
-            color: white;
-            box-shadow: 0 0 20px rgba(194, 185, 185, 0.3);
-        }
-
-        .google-icon 
-        {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-        }
-        @media (max-width: 768px) 
-        {
-            .container 
-            {
-                flex-direction: column;
-                width: 90%;
-                gap: 20px; /* ✅ Increases spacing */
-            }
-            .form-box 
-            {
-                width: 100%;
-                padding: 25px;
-            }
-        }
-
-    </style>
+    <script type="module" src="./env.js"></script>
+    <script type="module" src="./firebaseconfig.js"></script>
+    <link rel="stylesheet" href="styles/login.css">
 </head>
 <body>
     <a href="index.html" class="logo">
@@ -194,6 +15,7 @@
     <div class="container">
         <div class="form-box">
             <h2>Sign Up</h2>
+            <div id="signUpMessage" style="display: none; color: #ff8c8c; margin-bottom: 10px;"></div>
             <div class="input-group">
                 <img src="https://cdn4.iconfinder.com/data/icons/e-commerce-icon-set/48/Username-64.png" alt="User Icon">
                 <input type="text" id="name-js" placeholder="Enter Name" required>
@@ -210,6 +32,7 @@
         </div>
         <div class="form-box">
             <h2>Login</h2>
+            <div id="signInMessage" style="display: none; color: #ff8c8c; margin-bottom: 10px;"></div>
             <div class="input-group">
                 <img src="https://cdn0.iconfinder.com/data/icons/essentials-4/1691/packet-64.png" alt="Email Icon">
                 <input type="email" id="semail-js" placeholder="Enter Email" required>
