@@ -7,7 +7,7 @@
     body 
     {
         height: 100vh;
-        background: url('background.png') no-repeat center center/cover;
+        background: url('../background.png') no-repeat center center/cover;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -27,6 +27,9 @@
         z-index: 1;
         animation: fadeIn 1s ease-in-out;
     }
+
+                                /*css for centre container with the text*/
+
     .container 
     {
         position: relative;
@@ -38,7 +41,7 @@
     {
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
-        padding: 20px;
+        padding: 18px;
         border-radius: 15px;
         box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
         display: inline-block;
@@ -47,17 +50,8 @@
         position: relative;
         overflow: hidden;
     }
-    .glassmorphism::before 
-    {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-        z-index: 0;
-    }
+
+                                            /*Logo*/
     .logo 
     {
         position: absolute;
@@ -65,10 +59,6 @@
         left: 20px;
         display: flex;
         align-items: center;
-        text-decoration: none;
-        color: white;
-        font-size: 1.5rem;
-        font-weight: bold;
         transition: transform 0.3s ease, filter 0.3s ease;
         z-index: 1001;
     }
@@ -96,9 +86,11 @@
         display: inline-block;
         animation: typing 3s steps(20) forwards;
     }
+
+                                    /*For blinking effect*/
     #typing-text::after 
     {
-        content: "|"; /* Cursor */
+        content: "|";                           
         display: inline-block;
         animation: blink 0.8s infinite;
     }
@@ -109,7 +101,9 @@
         opacity: 0;
         animation: fadeIn 1.5s ease-in-out 3s forwards;
     }
-    .cta-btn 
+
+                                    /*For get-started button*/
+    .get-started
     {
         padding: 15px 30px;
         font-size: 1.2rem;
@@ -127,7 +121,7 @@
         position: relative;
         overflow: hidden;
     }
-    .cta-btn::before 
+    .get-started::before 
     {
         content: "";
         position: absolute;
@@ -141,15 +135,17 @@
         opacity: 0;
         transition: opacity 0.3s ease-in-out;
     }
-    .cta-btn:hover 
+    .get-started:hover 
     {
         transform: scale(1.1);
         box-shadow: 0 0 20px rgba(0, 194, 255, 0.8);
     }
-    .cta-btn:hover::before 
+    .get-started:hover::before 
     {
         opacity: 1;
     }
+
+                                        /*Animations*/
     @keyframes fadeIn 
     {
         from { opacity: 0; }
@@ -165,3 +161,49 @@
     {
         50% { opacity: 0; }
     }
+
+                                        /*For smaller screens*/
+    @media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        padding: 20px;
+        background-position: center;
+    }
+
+    .container {
+        width: 95%;
+    }
+
+    .glassmorphism {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .logo {
+        top: 10px;
+        left: 10px;
+        font-size: 1.2rem;
+    }
+
+    .logo img {
+        width: 120px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        white-space: normal; /* allow line break */
+        animation: typing 2.5s steps(15) forwards;
+    }
+
+    p {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+
+    .get-started
+   {
+        padding: 12px 24px;
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+}
