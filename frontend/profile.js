@@ -1,4 +1,4 @@
-import { auth, db } from '/backend/env.js';
+import { auth, db } from './env.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js';
 import { doc, setDoc, getDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
 
