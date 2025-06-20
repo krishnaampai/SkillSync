@@ -1,6 +1,6 @@
-import { db } from '../backend/env.js';
+import { db } from './env.js';
 import { doc, updateDoc, collection, getDocs, getDoc, arrayUnion, query, where } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
-import { sendCollaborationRequest, getCollaborationRequests, acceptCollaborationRequest, rejectCollaborationRequest } from "../backend/collaboration.js";
+import { sendCollaborationRequest, getCollaborationRequests, acceptCollaborationRequest, rejectCollaborationRequest } from "./collaboration.js";
 
 window.acceptCollaborationRequest = acceptCollaborationRequest;
 window.rejectCollaborationRequest = rejectCollaborationRequest;
