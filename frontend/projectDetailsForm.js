@@ -1,5 +1,5 @@
 // Import Firebase modules
-import { auth, db } from "../backend/env.js"; // Ensure env.js properly initializes Firebase
+import { auth, db } from "./env.js"; 
 import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 document.getElementById('submit-project').addEventListener('click', async (e) => {
